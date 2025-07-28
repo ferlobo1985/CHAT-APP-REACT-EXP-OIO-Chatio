@@ -1,5 +1,12 @@
 const messageHandler = async(socket,data)=>{
-    console.log(`Received message from ${socket.id}`,data)
+    
+
+    const aiResponseContent = {
+        chatID:data.id,
+        content: 'Response something cool..',
+        role:'assistant'
+    }
+    socket.emit('ai-response',aiResponseContent)
 }
 
 module.exports = { messageHandler }

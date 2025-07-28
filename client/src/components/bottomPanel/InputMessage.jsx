@@ -23,9 +23,11 @@ export default function InputMessage() {
         dispatch(setCurrentChatId(chatID))
       }
 
-      /// REDUX STORE
+      // Store the message in Redux state
       dispatch(storeMessage({message,chatID}))
 
+      // Call the function to send the message to the server
+      // This function should be defined in your socketClient file
       sendMessageToServer({message,chatID}) /// SOCKET IO
       setContent("")
     } else {
