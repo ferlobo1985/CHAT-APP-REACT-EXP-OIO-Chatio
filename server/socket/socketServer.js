@@ -1,4 +1,5 @@
-const { Server } = require('socket.io')
+const { Server } = require('socket.io');
+const { messageHandler } = require('./handlers')
 
 const registerSocketServer = (server) => {
     const io = new Server(server,{
@@ -9,7 +10,10 @@ const registerSocketServer = (server) => {
     });
 
     io.on('connection',(socket)=>{
-        console.log(`User: ${socket.id}`)
+        //console.log(`User: ${socket.id}`)
+        socket.on('user-message',(data)=>{
+            messageHandler(socket,data)
+        })
     })
 }
 

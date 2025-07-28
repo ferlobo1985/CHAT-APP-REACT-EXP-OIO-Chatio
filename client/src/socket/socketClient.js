@@ -9,3 +9,14 @@ export const socketServer = () => {
         console.log(`Connected to socket server: ${socket.id}`)
     })
 }
+
+
+export const sendMessageToServer = ({message,chatID}) =>{
+    const chat = {
+        chatID,
+        message
+    }
+    socket.emit('user-message',{
+        ...chat
+    })
+}
