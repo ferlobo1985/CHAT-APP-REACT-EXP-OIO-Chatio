@@ -1,5 +1,6 @@
 import ChatPanel from "./chat/ChatPanel"
 import InputMessage from "./bottomPanel/InputMessage"
+import SidePanel from "./chat/SidePanel"
 
 export default function MainLayout() {
   return (
@@ -11,7 +12,7 @@ export default function MainLayout() {
             <InputMessage/>
         </div>
         <div className="side_panel">
-            side
+            <SidePanel/>
         </div>
     </div>
   )
