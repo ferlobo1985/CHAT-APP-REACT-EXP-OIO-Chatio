@@ -2,7 +2,7 @@ import { useState } from "react"
 import { v4 as uuid } from "uuid"
 import { sendMessageToServer } from "../../socket/socketClient";
 
-import { setCurrentChatId } from "../../store/chatSlice";
+import { setCurrentChatId, storeMessage } from "../../store/chatSlice";
 import { useSelector, useDispatch } from 'react-redux'
 
 export default function InputMessage() {
@@ -24,6 +24,7 @@ export default function InputMessage() {
       }
 
       /// REDUX STORE
+      dispatch(storeMessage({message,chatID}))
 
       sendMessageToServer({message,chatID}) /// SOCKET IO
       setContent("")
