@@ -2,27 +2,35 @@ import { useState } from "react"
 import { v4 as uuid } from "uuid"
 import { sendMessageToServer } from "../../socket/socketClient";
 
+import { setCurrentChatId } from "../../store/chatSlice";
 import { useSelector, useDispatch } from 'react-redux'
 
 export default function InputMessage() {
   const [content,setContent] = useState("");
+  const dispatch = useDispatch()
   let chatID = useSelector((state)=> state.chat.currentChatID)
 
 
   const sendMessage = () => {
-    const message = {
-      role:'user',
-      content: content.trim()
-    };
-    if(!chatID){
-      // if no chat id, create a new one
-      chatID = uuid();
+    if(content.trim()){
+      const message = {
+        role:'user',
+        content: content.trim()
+      };
+      if(!chatID){
+        // if no chat id, create a new one
+        chatID = uuid();
+        dispatch(setCurrentChatId(chatID))
+      }
+
+      /// REDUX STORE
+
+      sendMessageToServer({message,chatID}) /// SOCKET IO
+      setContent("")
+    } else {
+       // Optionally handle empty message case
+      console.log('Message content cannot be empty')
     }
-
-    /// REDUX STORE
-
-    sendMessageToServer({message,chatID}) /// SOCKET IO
-    setContent("")
   }
 
   const handleEnterPress = (e) => {

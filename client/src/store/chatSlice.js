@@ -7,9 +7,13 @@ const chatSlice = createSlice({
         chats:[],
         loading:false
     },
-    reducer:{
-
+    reducers:{
+        
+        setCurrentChatId:(state,action)=>{
+            state.currentChatID = action.payload;
+        }
     }
 })
 
+export const { setCurrentChatId } = chatSlice.actions;
 export default chatSlice.reducer;
