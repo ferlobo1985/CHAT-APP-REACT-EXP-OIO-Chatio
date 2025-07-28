@@ -1,5 +1,6 @@
 import { io } from 'socket.io-client';
 import { store } from '../store'
+import { storeResponse } from '../store/chatSlice'
 
 let socket;
 
@@ -9,7 +10,7 @@ export const socketServer = () => {
     socket.on('connect',()=>{
         ///console.log(`Connected to socket server: ${socket.id}`)
         socket.on('ai-response',(data)=>{
-            console.log(data)
+            store.dispatch(storeResponse(data))
         })
     })
 }
