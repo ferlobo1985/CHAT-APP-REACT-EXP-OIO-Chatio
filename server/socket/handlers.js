@@ -4,7 +4,8 @@ const messageHandler = async(socket,data)=>{
     
     // Extract the message and history from the data
     const aiResponse = await client.chat.completions.create({
-        model:'gpt-4.1-mini',
+        // model:'gpt-4.1-mini',
+        model:'openai/gpt-4.1-mini',
         messages: [
             ...data.messages
         ]

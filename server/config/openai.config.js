@@ -9,8 +9,8 @@ require('dotenv').config();
 
 const client = new OpenAI({
     //PLAYGORUND CONFIGS
+    baseURL:"https://models.github.ai/inference",
     apiKey: process.env.OPEN_AI_API_KEY,
-    organization: process.env.OPEN_AI_ORGANIZATION
 })
 
 module.exports = { client }
