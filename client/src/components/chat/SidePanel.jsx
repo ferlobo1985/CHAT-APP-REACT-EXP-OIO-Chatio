@@ -7,7 +7,7 @@ import { v4 as uuid } from 'uuid'
 export default function SidePanel() {
     const [ openNav, setOpenNav] = useState(false);
     const dispatch = useDispatch();
-    const { chats, currentChatId } = useSelector((state)=> state.chat)
+    const { chats, currentChatID } = useSelector((state)=> state.chat)
 
 
     const handleNewChat = () => {
@@ -22,6 +22,8 @@ export default function SidePanel() {
 
     return (
         <>
+        {chats.length > 0 && (
+        <>
             <button className="openbtn" onClick={toggleNav}>
                 <IoMenu/>
             </button>
@@ -32,8 +34,15 @@ export default function SidePanel() {
                 <div>
                     <ul>
 
-                        <li>
-                            <span>Chat name</span>
+                    {chats.map(chat=>(
+                        <li
+                            key={chat.id}
+                            onClick={()=>dispatch(setCurrentChatId(chat.id))}
+                            className={`${currentChatID === chat.id ? 'active':''}`}
+                        >
+                            <span>{chat.messages.length > 0 ?
+                                chat.messages[0].content:"New chat"
+                            }</span>
                             <span
                                 className="deleteBtn"
                                 onClick={()=>alert('Delete chat')}
@@ -41,7 +50,8 @@ export default function SidePanel() {
                                 <IoCloseCircle/>
                             </span>
                         </li>
-
+                    ))}
+                       
                     </ul>
                 </div>
 
@@ -53,6 +63,8 @@ export default function SidePanel() {
                 
 
             </div>
+        </>
+        )}
         </>
     )
 }
