@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { setCurrentChatId } from "../../store/chatSlice";
+import { setCurrentChatId, removeChat } from "../../store/chatSlice";
 import { useSelector, useDispatch } from 'react-redux';
 import { IoCloseCircle, IoMenu } from 'react-icons/io5'
 import { v4 as uuid } from 'uuid'
@@ -37,15 +37,16 @@ export default function SidePanel() {
                     {chats.map(chat=>(
                         <li
                             key={chat.id}
-                            onClick={()=>dispatch(setCurrentChatId(chat.id))}
                             className={`${currentChatID === chat.id ? 'active':''}`}
                         >
-                            <span>{chat.messages.length > 0 ?
+                            <span
+                                onClick={()=>dispatch(setCurrentChatId(chat.id))}
+                            >{chat.messages.length > 0 ?
                                 chat.messages[0].content:"New chat"
                             }</span>
                             <span
                                 className="deleteBtn"
-                                onClick={()=>alert('Delete chat')}
+                                onClick={()=> dispatch(removeChat(chat.id))}
                             >
                                 <IoCloseCircle/>
                             </span>

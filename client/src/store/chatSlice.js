@@ -32,11 +32,19 @@ const chatSlice = createSlice({
             }
             state.loading = false;
         },
+        removeChat:(state,action)=>{
+            const chatID = action.payload;
+            state.chats = state.chats.filter(chat=> chat.id !== chatID)
+            if(state.currentChatID === chatID){
+                state.currentChatID = null;
+            }
+
+        },
         setCurrentChatId:(state,action)=>{
             state.currentChatID = action.payload;
         }
     }
 })
 
-export const { setCurrentChatId, storeMessage, storeResponse } = chatSlice.actions;
+export const { setCurrentChatId, storeMessage, storeResponse, removeChat } = chatSlice.actions;
 export default chatSlice.reducer;
