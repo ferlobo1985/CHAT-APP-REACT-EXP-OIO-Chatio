@@ -2,7 +2,10 @@ import { HiUserCircle } from 'react-icons/hi2';
 import { RiRobot3Fill } from 'react-icons/ri'
 
 
-export default function ChatBubble() {
+export default function ChatBubble({data}) {
+
+    console.log(data)
+
   return (
     <div
         className='chat_box_container'
