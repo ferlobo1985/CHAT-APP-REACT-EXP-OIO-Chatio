@@ -19,7 +19,7 @@ const messageHandler = async(socket,data)=>{
         content: aiMessage ? aiMessage:'No response from AI',
         role:'assistant'
     }
-    messageHistory(data,aiResponseContent)
+    //messageHistory(data,aiResponseContent)
     socket.emit('ai-response',aiResponseContent)
 }
 
@@ -36,7 +36,7 @@ const messageHistory = (data,response) => {
             ]
         })
     }
-    console.log(JSON.stringify(history))
+    //console.log(JSON.stringify(history))
 }
 
 
