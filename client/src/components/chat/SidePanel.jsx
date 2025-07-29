@@ -1,12 +1,24 @@
 import { useState } from "react"
+import { setCurrentChatId } from "../../store/chatSlice";
+import { useSelector, useDispatch } from 'react-redux';
 import { IoCloseCircle, IoMenu } from 'react-icons/io5'
+import { v4 as uuid } from 'uuid'
 
 export default function SidePanel() {
-    const [ openNav, setOpenNav] = useState(false)
+    const [ openNav, setOpenNav] = useState(false);
+    const dispatch = useDispatch();
+    const { chats, currentChatId } = useSelector((state)=> state.chat)
+
+
+    const handleNewChat = () => {
+        const newChatId = uuid();
+        dispatch(setCurrentChatId(newChatId))
+    }
 
     const toggleNav = () => {
         setOpenNav(!openNav)
     }
+    
 
     return (
         <>
@@ -33,9 +45,12 @@ export default function SidePanel() {
                     </ul>
                 </div>
 
-                <div className="new-chat-button">
-                    New chat
-                </div>
+                { chats.length >= 1 && (
+                    <div onClick={handleNewChat} className="new-chat-button">
+                        New chat
+                    </div>
+                )}
+                
 
             </div>
         </>
