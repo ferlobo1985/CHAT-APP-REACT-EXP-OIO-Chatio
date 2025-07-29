@@ -1,5 +1,6 @@
 const { client } = require('../config/openai.config')
 
+let history = [];
 const messageHandler = async(socket,data)=>{
     
     // Extract the message and history from the data
@@ -18,7 +19,25 @@ const messageHandler = async(socket,data)=>{
         content: aiMessage ? aiMessage:'No response from AI',
         role:'assistant'
     }
+    messageHistory(data,aiResponseContent)
     socket.emit('ai-response',aiResponseContent)
 }
+
+const messageHistory = (data,response) => {
+    const chat = history.find(chat => chat.id === data.id);
+    if(chat){
+        chat.messages.push(response)
+    } else {
+        history.push({
+            id:data.id,
+            messages:[
+                ...data.messages,
+                response
+            ]
+        })
+    }
+    console.log(JSON.stringify(history))
+}
+
 
 module.exports = { messageHandler }
