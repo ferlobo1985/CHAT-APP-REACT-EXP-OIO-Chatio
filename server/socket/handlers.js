@@ -3,7 +3,7 @@ const { client } = require('../config/openai.config')
 let history = [];
 const messageHandler = async(socket,data)=>{
     try {
-         throw new Error("Testing error handling")
+        // throw new Error("Testing error handling")
 
         // Extract the message and history from the data
         const aiResponse = await client.chat.completions.create({

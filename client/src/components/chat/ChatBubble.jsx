@@ -1,9 +1,10 @@
 import { HiUserCircle } from 'react-icons/hi2';
 import { RiRobot3Fill } from 'react-icons/ri'
-
+import { MdErrorOutline } from "react-icons/md";
 
 export default function ChatBubble({data}) {
 
+    let aiError = data.error || null;
 
   return (
     <div
@@ -11,17 +12,17 @@ export default function ChatBubble({data}) {
     >
         <div className='person'>
             <div className='person_avatar'>
-                {data.role === 'user' ?
-                    <HiUserCircle/>
-                    :
-                    <RiRobot3Fill/>
+                {data.role === 'user' &&  <HiUserCircle/>}
+                {data.role === 'assistant' && aiError ?
+                    <MdErrorOutline/>:<RiRobot3Fill/>
                 }
-                
             </div>
         </div>
         <div className='chat_box_context'>
             <div className='chat_box_bubble'>
-                <span>{data.content}</span>
+                <span
+                    style={aiError ? {background:'red'}:{}}
+                >{data.content}</span>
             </div>
         </div>
     </div>
