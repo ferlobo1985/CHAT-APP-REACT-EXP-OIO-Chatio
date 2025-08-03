@@ -3,11 +3,14 @@ const { client } = require('../config/openai.config')
 let history = [];
 const messageHandler = async(socket,data)=>{
     
+    throw new Error("Testing error handling")
+
     // Extract the message and history from the data
     const aiResponse = await client.chat.completions.create({
         // model:'gpt-4.1-mini',
         model:'openai/gpt-4.1-mini',
         messages: [
+            {role:'system',content:'Respond in a casual, friendly way. Include emojis in your replies.'},
             ...data.messages
         ],
         stream:true,
