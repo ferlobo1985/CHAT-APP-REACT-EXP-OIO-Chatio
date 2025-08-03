@@ -10,7 +10,9 @@ const messageHandler = async(socket,data)=>{
         messages: [
             ...data.messages
         ],
-        stream:true
+        stream:true,
+        temperature:0.5,
+        max_tokens:200
     });
 
     for await (const chunk of aiResponse) {
