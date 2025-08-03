@@ -37,6 +37,18 @@ const chatSlice = createSlice({
             }
             state.loading = false;
         },
+        aiError:(state,action)=>{
+            const { content, error, chatID } = action.payload;
+            const chat = state.chats.find(chat=> chat.id === chatID);
+            if(chat){
+                chat.messages.push({
+                    role:'assistant',
+                    content: content,
+                    error: error || 'N/A error'
+                })
+            }
+            state.loading = false;
+        },
         removeChat:(state,action)=>{
             const chatID = action.payload;
             state.chats = state.chats.filter(chat=> chat.id !== chatID)
@@ -51,5 +63,5 @@ const chatSlice = createSlice({
     }
 })
 
-export const { setCurrentChatId, storeMessage, storeResponse, removeChat } = chatSlice.actions;
+export const { setCurrentChatId, storeMessage, storeResponse, removeChat, aiError } = chatSlice.actions;
 export default chatSlice.reducer;
