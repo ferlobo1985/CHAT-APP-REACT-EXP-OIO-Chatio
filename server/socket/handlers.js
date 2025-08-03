@@ -22,6 +22,7 @@ const messageHandler = async(socket,data)=>{
                 role:'assistant'
             })
         }
+        await new Promise(resolve=> setTimeout(resolve, 150))
     }
 
     // Extract the content of the AI response

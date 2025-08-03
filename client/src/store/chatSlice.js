@@ -24,11 +24,16 @@ const chatSlice = createSlice({
         storeResponse:(state,action)=>{
             const { content, role, chatID } = action.payload;
             const chat = state.chats.find(chat=> chat.id === chatID);
-            if(chat){
+
+            const isAssistant = chat.messages.at(-1).role === 'assistant'
+            if(chat && !isAssistant){
                 chat.messages.push({
                     role,
                     content
                 })
+            } else {
+                const lastMessage = chat.messages.at(-1);
+                lastMessage.content += content
             }
             state.loading = false;
         },
