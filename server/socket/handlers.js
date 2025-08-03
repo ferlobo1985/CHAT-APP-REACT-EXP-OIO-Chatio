@@ -9,18 +9,30 @@ const messageHandler = async(socket,data)=>{
         model:'openai/gpt-4.1-mini',
         messages: [
             ...data.messages
-        ]
+        ],
+        stream:true
     });
 
-    // Extract the content of the AI response
-    const aiMessage = aiResponse?.choices[0]?.message?.content;
-    const aiResponseContent = {
-        chatID:data.id,
-        content: aiMessage ? aiMessage:'No response from AI',
-        role:'assistant'
+    for await (const chunk of aiResponse) {
+        const content = chunk.choices[0]?.delta?.content || '';
+        if(content){
+            socket.emit('ai-response',{
+                chatID:data.id,
+                content: content,
+                role:'assistant'
+            })
+        }
     }
+
+    // Extract the content of the AI response
+    // const aiMessage = aiResponse?.choices[0]?.message?.content;
+    // const aiResponseContent = {
+    //     chatID:data.id,
+    //     content: aiMessage ? aiMessage:'No response from AI',
+    //     role:'assistant'
+    // }
     //messageHistory(data,aiResponseContent)
-    socket.emit('ai-response',aiResponseContent)
+    // socket.emit('ai-response',aiResponseContent)
 }
 
 const messageHistory = (data,response) => {
